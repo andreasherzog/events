@@ -1,0 +1,95 @@
+<head>
+  <title>#hoibeviarre events</title>
+</head>
+
+<body>
+  <div class="container">
+    <header id="header">
+      <h1>Events ({{upcomingCount}} upcoming)</h1>
+      <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Show only events I am attending
+      </label>
+      {{> loginButtons}}
+      {{#if currentUser}}
+       {{#if addNewEvent}}
+        <div id="submitNewEvents">
+          {{> submitNewEvents}}
+        </div>
+        {{else}}
+        <div class="add-new-event">
+          <label>Add new Event</label>
+          </div>
+        {{/if}}
+        {{/if}}
+    </header>
+
+    <ul>
+      {{#each events}}
+        {{> event}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="event">
+  <li class="{{#if isChecked}}checked{{/if}} {{#if private}}private{{/if}}">
+    {{#if isOwner}}
+    <button class="delete">&times;</button>
+    {{/if}}
+    <input type="checkbox" id="{{_id}}" checked="{{isChecked}}" class="toggle-checked" />
+    {{#if isOwner}}
+      <button class="toggle-private">
+        {{#if private}}
+          Private
+        {{else}}
+          Public
+        {{/if}}
+      </button>
+    {{/if}}
+    {{#if view}}
+
+      <label class="event-item"><span class="text"><strong>{{username}}</strong> - {{text}}</span></label>
+      <p>{{formatDate eventDate}}</p>
+      <p>{{description}}</p>
+      <ul>
+        {{#each attending}}
+            <li class="{{#if ../private}}private{{/if}} attending">{{this.name}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+    <label class="event-item"><span class="text"><strong>{{username}}</strong> - {{text}}</span></label>
+    {{/if}}
+  </li>
+</template>
+
+<template name="submitNewEvents">
+    <form class="new-event input-group">
+            <input type="text" name="text" placeholder="Type to add new event" />
+            <input type="text" name="description" placeholder="Description" />
+            {{> datetimepicker}}
+            {{> updateButtons}}
+    </form>
+</template>
+
+<template name="datetimepicker">
+  <div class="datetimepicker">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    <input class="set-due-date form-control" type="text" name="date" placeholder="Date"/>
+  </div>
+</template>
+
+<template name="updateButtons">
+  {{#if formitemChanged}}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+      <button type="submit"
+        class="btn btn-default form-done">
+      Save</button>
+      <button type="submit"
+        class="btn form-done cancel">
+      Cancel</button>
+    </div>
+  </div>
+  {{/if}}
+</template>
