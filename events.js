@@ -102,8 +102,9 @@ if (Meteor.isClient) {
             Meteor.call("addEvent", text, description, date);
 
             // Clear form
-            //event.target.text.value = "";
-
+            event.target.text.value = "";
+            event.target.date.value = "";
+            event.target.description.value = "";
             // remove Buttons
             Session.set("formitemChanged", false);
 
