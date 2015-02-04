@@ -72,7 +72,7 @@ if (Meteor.isClient) {
         }
     });
     Template.datetimepicker.rendered = function(){
-        $('.datetimepicker').datetimepicker();
+        $('.datetimepicker').datetimepicker({format: "DD.MM.YYYY HH:mm"});
     };
     Template.submitNewEvents.events({
         "keypress .new-event": function(event){
@@ -94,7 +94,7 @@ if (Meteor.isClient) {
             // This function is called when the new event form is submitted
             console.log(event.target);
             var text = event.target.text.value;
-            var date = event.target.date.value;
+            var date = moment(event.target.date.value, "DD.MM.YYYY HH:mm").format();
             var description = event.target.description.value;
 
             console.log(text + " " + date + " " + description);
