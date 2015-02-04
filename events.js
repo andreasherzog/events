@@ -78,6 +78,9 @@ if (Meteor.isClient) {
         "keypress .new-event": function(event){
             Session.set("formitemChanged", true);
         },
+        "click .hideSubmitEvents": function () {
+          Session.set("addNewEvent", false);
+        },
         "click .cancel": function(event){
             $('.bootstrap-datetimepicker-widget').remove();
             form = $('#submitNewEvents');
